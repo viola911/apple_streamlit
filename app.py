@@ -16,14 +16,24 @@ def get_stock_data(years=5):
     start_date = end_date - timedelta(days=years * 365)
 
     data = yf.download(ticker_symbol, start=start_date, end=end_date)
+    if data.empty:
+        return None
+
     return data
+
 
 # --- 2. Prepare Data ---
 @st.cache_data
 def prepare_data(data):
     df = data["Close"].reset_index()
     df.columns = ["ds", "y"]
+
     df["ds"] = pd.to_datetime(df["ds"])
+    df["y"] = pd.to_numeric(df["y"], errors="coerce")
+
+    # 🔴 Drop NaN values
+    df = df.dropna()
+
     return df
 
 # --- 3. Train Model ---

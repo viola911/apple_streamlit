@@ -88,5 +88,5 @@ if st.button("Analyze and Predict Apple Stock"):
         st.subheader("📉 Decomposition (Trend & Seasonality)")
         st.pyplot(model.plot_components(forecast))
 
-        st.success("Prediction completed successfully ✅")
+        st.success("Prediction completed successfully")
 
